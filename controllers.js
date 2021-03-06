@@ -1,3 +1,4 @@
+const AccountModel = require("./accountModel");
 const BankModel = require("./models");
 //controllers
 const listBanksController = (req, res) => {
@@ -40,26 +41,34 @@ const updateBankController = (req, res) => {
 
             bank.save();
 
-            res.json({ message: "create successful", data: bank});
+            res.json({ message: "crea  te successful", data: bank });
         }
 
-        res.json({ message: "Document cannot be found"});
+        res.json({ message: "Document cannot be found" });
     }).catch(err => console.log(err));
 
     // const updatedBank = BankModel.update({ name, location, branch, phone, address, accountNumber });
     // res.json({ message: "create successful", data: updatedBank });
 }
-// const deleteBankController = (req, res) => {
-//     // delete a bank
-//     const { name } = req.body;
-//     const deletedBank = BankModel.delete({ name });
-//     res.json({ message: "deleted bank", data: deletedBank });
-// }
+const deleteBankController = (req, res) => {
+    // delete a bank
+    const { id } = req.body;
+    BankModel.findByIdAndRemove(id).then(deletedBank => {
+        if (deletedBank) {
 
+AccountModel.deleteMany({bankId:deletedBank._id}).then(result =>{
+    res.json({ message: "deleted bank", data: deletedBank });
+}).catch(err => console.log(err)); 
+           
+            return;
+        }
+        res.json({ message: "bank not found" });
+    });
+}
 
 module.exports = {
     listBanksController,
     createBankController,
     updateBankController,
-    // deleteBankController
+    deleteBankController
 }
