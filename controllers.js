@@ -41,7 +41,7 @@ const updateBankController = (req, res) => {
 
             bank.save();
 
-            res.json({ message: "crea  te successful", data: bank });
+            res.json({ message: "create successful", data: bank });
         }
 
         res.json({ message: "Document cannot be found" });
@@ -62,7 +62,7 @@ AccountModel.deleteMany({bankId:deletedBank._id}).then(result =>{
            
             return;
         }
-        res.json({ message: "bank not found" });
+        res.json({ message: "Bank not found" });
     });
 }
 
