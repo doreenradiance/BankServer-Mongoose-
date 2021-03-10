@@ -1,4 +1,5 @@
-const AccountModel = require("./models");
+const {validationResult} = require ("express-validator")
+const AccountModel = require("./accountModel");
 //controllers
 const listAccountController = (req, res) => {
     //list all banks
@@ -18,7 +19,13 @@ const listAccountController = (req, res) => {
 }
 
 const createAccountController = (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.json({error: errors.array()})
+    }
+    
     // create a bank
+
     const data = req.body;
     const account = new AccountModel(data)
 
@@ -29,6 +36,7 @@ const createAccountController = (req, res) => {
         res.json({ message: "Failed to create account." });
     }).catch(error => console.log(error));
 }
+
 const updateAccountController = (req, res) => {
     // update a bank
     const { accountName, accountNumber, accountType, bank, id } = req.body;
@@ -50,18 +58,21 @@ const updateAccountController = (req, res) => {
     // const updatedAccount = AcountModel.update({ accountName, accountNumber,accountType,bank });
     // res.json({ message: "create account successful", data: updatedAccount });
     // }
-    const deleteAccountController = (req, res) => {
-        // delete an account
-        const { name } = req.body;
-        const deletedAccount = AccountModel.delete({ name });
-        res.json({ message: "deleted account", data: deletedAccount });
-    }
+ 
 
 
-    module.exports = {
-        listAccountController,
-        createAccountController,
-        updateAccountController,
-        deleteAccountController,
-    }
+}
+
+const deleteAccountController = (req, res) => {
+    // delete an account
+    const { name } = req.body;
+    const deletedAccount = AccountModel.delete({ name });
+    res.json({ message: "deleted account", data: deletedAccount });
+}
+
+module.exports = {
+    listAccountController,
+    createAccountController,
+    updateAccountController,
+    deleteAccountController,
 }
