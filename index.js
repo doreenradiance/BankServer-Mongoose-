@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const bankRouter = require("./routes");
+const accountRouter = require("./accountRouter")
 const {
     listBanksController,
     createBankController,
@@ -19,6 +20,9 @@ server.use(bodyParser.json());
 
 // define routes
 server.use(bankRouter)
+
+// define accountRouter
+server.use(accountRouter)
 
 // // connect database and start server
 mongoose.connect("mongodb+srv://codetrainUser:doreen1@cluster0.dlih7.mongodb.net/codetrain?retryWrites=true&w=majority",
