@@ -2,12 +2,12 @@ const {validationResult} = require ("express-validator")
 const AccountModel = require("./accountModel");
 //controllers
 const listAccountController = (req, res) => {
-    //list all banks
+    //list all accounts
     const { id } = req.params;
 
     if (id) {
         AccountModel.find({ _id: id })
-            .populate("bankId", "name location branch")
+            .populate("bankId", "accountName accountNumber accountType")
             .then(accounts => {
                 res.json({ data: accounts })
             }).catch(err => console.log(err));
@@ -24,7 +24,7 @@ const createAccountController = (req, res) => {
         return res.json({error: errors.array()})
     }
     
-    // create a bank
+    // create an account
 
     const data = req.body;
     const account = new AccountModel(data)
@@ -38,7 +38,7 @@ const createAccountController = (req, res) => {
 }
 
 const updateAccountController = (req, res) => {
-    // update a bank
+    // update a account
     const { accountName, accountNumber, accountType, bank, id } = req.body;
 
     AccountModel.findById(id).then(account => {
