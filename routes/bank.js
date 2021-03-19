@@ -4,6 +4,15 @@ const {listBanksController,
     updateBankController,
     deleteBankController} = require("../controllers/bank")
 
+        // // create account - post method
+router.post("/bank", 
+[body("name").notEmpty().withMessage("Account Name required"), 
+body("location").notEmpty().withMessage("Account Location required"),
+body("branch").notEmpty().withMessage("Account Branch required"),
+body("address").not().isEmpty().withMessage("Address required"),
+body("accountNumber").not().isEmpty().withMessage("AccountNumber required")],
+createAccountController)
+
 //routes
 // view bank - get method
 router.get("/bank/:id?", listBanksController)
