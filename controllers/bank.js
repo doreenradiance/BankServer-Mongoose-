@@ -20,7 +20,8 @@ const listBanksController = (req, res) => {
 }
 
 const createBankController = (req, res) => {
-    errors = validationResult(req)
+    // validation checks
+    const errors = validationResult(req)
     if (!errors.isEmpty()){
         return res.json({error: errors.array()})
     }
