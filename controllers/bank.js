@@ -1,6 +1,6 @@
 const {validationResult} = require ("express-validator")
-const AccountModel = require("./accountModel");
-const BankModel = require("./models");
+const AccountModel = require(".. /models/account");
+const BankModel = require("../models/bank");
 //controllers
 const listBanksController = (req, res) => {
     //list all banks
